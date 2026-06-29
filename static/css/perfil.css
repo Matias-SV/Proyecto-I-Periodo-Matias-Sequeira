@@ -1,0 +1,366 @@
+/*** Le damos a todos los elementos un modelo de caja uniforme, sin márgenes ni rellenos, y establecemos la fuente base del sistema. ***/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*** Le damos al cuerpo un fondo claro y nos aseguramos de que ocupe toda la altura de la pantalla. ***/
+body {
+    background: #f4f7fe;
+    min-height: 100vh;
+}
+
+/*** Creamos el encabezado con fondo blanco, distribución en fila y un borde inferior que lo separa del contenido. ***/
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f5;
+}
+
+/*** Le damos al logo del encabezado alineación horizontal, color corporativo y tipografía en negrita. ***/
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2b4c7e;
+    text-decoration: none;
+}
+
+/*** Le damos a la imagen del logo un tamaño fijo y ajuste de contenido para que no se deforme. ***/
+.header-logo img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/*** Creamos un ícono azul opcional dentro del logo con fondo redondeado y texto blanco centrado. ***/
+.header-logo .icono-azul {
+    width: 30px;
+    height: 30px;
+    background: #3b5a85;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+}
+
+/*** Le damos al botón de cerrar sesión un estilo discreto de enlace, sin subrayado ni decoración extra. ***/
+.btn-cerrar-sesion {
+    color: #6b7c9e;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-cerrar-sesion:hover {
+    color: #3b5a85;
+}
+
+/*** Centramos el área del perfil con un ancho máximo y relleno lateral para que respire en pantalla. ***/
+.perfil-area {
+    max-width: 680px;
+    margin: 24px auto;
+    padding: 0 24px;
+}
+
+/*** Le damos al enlace de volver un estilo discreto con ícono alineado y margen inferior para separarlo de la tarjeta. ***/
+.volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #6b7c9e;
+    text-decoration: none;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.volver:hover {
+    color: #3b5a85;
+}
+
+/*** Creamos la tarjeta del perfil con fondo blanco, bordes redondeados y desbordamiento oculto. ***/
+.perfil-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f5;
+    overflow: hidden;
+}
+
+/*** Le damos a la sección superior del perfil relleno interno y un borde inferior que la separa de la grilla. ***/
+.perfil-top {
+    padding: 24px;
+    border-bottom: 1px solid #e2e8f5;
+}
+
+/*** Alineamos el avatar y la información del contacto en fila con separación entre ellos. ***/
+.perfil-id {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+/*** Creamos el avatar circular del perfil con la inicial del nombre, fondo azul y texto blanco en negrita grande. ***/
+.perfil-avatar {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    background: #6384b3;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/*** Le damos al nombre completo del contacto color corporativo, tamaño grande y negrita para que destaque. ***/
+.perfil-nombre {
+    color: #2b4c7e;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+/*** Le damos al cargo o dirección del contacto un color gris claro y tamaño pequeño. ***/
+.perfil-cargo {
+    color: #8b95b3;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+/*** Le damos a la categoría del contacto un color verde y negrita media para diferenciarlo del cargo. ***/
+.perfil-empresa {
+    color: #3b8a5a;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/*** Creamos el badge de estado con relleno interno y bordes bien redondeados. ***/
+.badge {
+    padding: 4px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/*** Decoramos el badge verde para contactos activos y el rojo para contactos inactivos. ***/
+.badge.verde { background: #e6f9f0; color: #16a34a; }
+.badge.rojo { background: #fde8e8; color: #dc2626; }
+
+/*** Creamos la grilla de información del contacto en dos columnas con separación uniforme y relleno interno. ***/
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px 24px;
+}
+
+/*** Hacemos que la tarjeta con clase "full" ocupe ambas columnas de la grilla. ***/
+.info-grid .full {
+    grid-column: span 2;
+}
+
+/*** Le damos a cada tarjeta de información un fondo gris muy claro, bordes redondeados y distribución en fila. ***/
+.info-card {
+    background: #f8faff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+/*** Decoramos el ícono de cada tarjeta con un fondo lila, bordes redondeados y tamaño compacto. ***/
+.info-ico {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: #ede9ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/*** Le damos a la etiqueta de cada tarjeta un color gris, mayúsculas y espaciado entre letras para que actúe como encabezado. ***/
+.info-label {
+    color: #8b95b3;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+}
+
+/*** Le damos al valor de cada tarjeta color corporativo y negrita media para destacarlo. ***/
+.info-valor {
+    color: #2b4c7e;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/*** Hacemos la variante verde del valor para mostrar el estado "Conectado" con color y negrita destacados. ***/
+.info-valor.verde {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+/*** Distribuimos los botones de acción del perfil en fila con separación y soporte para múltiples filas si es necesario. ***/
+.perfil-btns {
+    display: flex;
+    gap: 10px;
+    padding: 18px 24px;
+    border-top: 1px solid #e2e8f5;
+    flex-wrap: wrap;
+}
+
+/*** Creamos el botón primario con fondo azul corporativo para acciones principales como editar el contacto. ***/
+.btn-primary {
+    background: #3b5a85;
+    color: #fff;
+    padding: 9px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-primary:hover {
+    background: #2b4a70;
+}
+
+/*** Creamos el botón de peligro con fondo rosado y texto rojo para la acción de eliminar el contacto. ***/
+.btn-danger {
+    background: #fff0f0;
+    color: #dc2626;
+    padding: 9px 20px;
+    border: 1.5px solid #fecaca;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background: #fee2e2;
+}
+
+/*** Le damos al botón secundario fondo blanco y borde sutil para acciones como volver al listado. ***/
+.btn-secondary {
+    background: #fff;
+    color: #3b5a85;
+    padding: 9px 20px;
+    border: 1.5px solid #d5ddf0;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-secondary:hover {
+    background: #f0f4fd;
+}
+
+/*** Hacemos que el fondo del modal cubra toda la pantalla con negro semitransparente cuando se activa. ***/
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/*** Creamos la caja del modal centrada con fondo blanco, sombra suave y bordes redondeados. ***/
+.modal-box {
+    background: #fff;
+    width: 430px;
+    max-width: 92%;
+    padding: 26px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+/*** Decoramos el ícono del modal con forma circular, fondo rosado y tamaño fijo. ***/
+.modal-icono {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    background: #fde8e8;
+}
+
+/*** Hacemos que el cuerpo del modal ocupe todo el espacio restante junto al ícono. ***/
+.modal-cuerpo { flex: 1; }
+
+/*** Le damos al título del modal color corporativo, tamaño destacado y negrita. ***/
+.modal-titulo {
+    color: #2b4c7e;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+/*** Le damos al texto del modal un color gris claro con interlineado cómodo para facilitar la lectura. ***/
+.modal-texto {
+    color: #8b95b3;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+/*** Distribuimos los botones del modal en fila con separación uniforme entre ellos. ***/
+.modal-btns {
+    display: flex;
+    gap: 10px;
+}
+
+/*** Le damos a los botones del modal tamaño igual, bordes redondeados, negrita y soporte para usarlos como enlaces. ***/
+.mbtn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*** Decoramos el botón rojo para confirmar la eliminación y el blanco para cancelar sin hacer cambios. ***/
+.mbtn.rojo { background: #dc2626; color: #fff; }
+.mbtn.blanco { background: #fff; color: #555; border: 1.5px solid #d5ddf0; }

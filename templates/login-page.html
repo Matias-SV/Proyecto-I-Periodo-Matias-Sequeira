@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Gestor de Contactos</title>
+    <!---Enlazamos la hoja de estilos específica para la pantalla de inicio de sesión. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+
+<!---Creamos el contenedor principal del login, centrado en pantalla, con un panel que incluye el ícono, título y subtítulo del sistema. -->
+<div class="login-wrap">
+    <div class="login-panel">
+        <div class="login-icono"><img src="static/images/login.jpg" style="width: 70%; height: 70%; object-fit: contain;"></div>
+        <div class="login-titulo">Gestor de Contactos</div>
+        <div class="login-sub">Inicia sesion para acceder al sistema</div>
+
+        <!---Si el servidor retorna un error de autenticación, lo mostramos aquí como alerta visible para el usuario. -->
+        {% if error %}<script>alert("{{ error }}");</script>{% endif %}
+
+        <!---Formulario de inicio de sesión con los campos de usuario y contraseña, cada uno con su ícono decorativo. -->
+        <form method="POST">
+            <div class="campo">
+                <label>Usuario</label>
+                <div class="input-wrap">
+                    <span class="icono-campo"><img src="static/images/usuario.jpg" style="width: 100%; height: 100%; object-fit: contain;"></span>
+                    <input type="text" name="usuario" placeholder="Ingrese su usuario" required>
+                </div>
+            </div>
+            <div class="campo">
+                <label>Contrasena</label>
+                <div class="input-wrap">
+                    <span class="icono-campo"><img src="static/images/password.jpg" style="width: 100%; height: 100%; object-fit: contain;"></span>
+                    <input type="password" name="contrasena" placeholder="Ingrese su contrasena" required>
+                </div>
+            </div>
+            <!---Botón para enviar el formulario e iniciar sesión en el sistema. -->
+            <button type="submit" class="btn-login">Iniciar Sesion</button>
+        </form>
+
+        <!---Mostramos el logo del sistema al pie del panel de login. -->
+        <div class="login-logo">
+            <img src="{{ url_for('static', filename='Images/imagen_logo.png') }}" alt="Logo">
+        </div>
+    </div>
+</div>
+</body>
+</html>

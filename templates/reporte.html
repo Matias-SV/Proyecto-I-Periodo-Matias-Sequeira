@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte General</title>
+    <!---Enlazamos la hoja de estilos principal para mantener la apariencia del sistema. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+<!---Encabezado con el logo del sistema y el botón para cerrar sesión. -->
+<header class="header">
+    <div class="header-logo">
+        <img src="{{ url_for('static', filename='Images/imagen_logo.png') }}" alt="Logo">
+        Gestor de Contactos
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn-cerrar-sesion">&#8594; Cerrar Sesion</a>
+</header>
+
+<!---Estructura de layout con barra lateral de navegación y contenido principal del reporte. -->
+<div class="layout">
+    <!---Barra lateral con los enlaces de navegación, marcando "Reportes" como la sección activa. -->
+    <aside class="sidebar">
+        <a href="{{ url_for('contactos') }}" class="nav-link">🏠︎ Inicio</a>
+        <a href="{{ url_for('buscar_contacto') }}" class="nav-link">⌕ Buscar</a>
+        <a href="{{ url_for('reporte') }}" class="nav-link activo">🗏 Reportes</a>
+    </aside>
+
+    <main class="contenido">
+
+        <!---Sección superior con el título y descripción general del reporte. -->
+        <div class="seccion-top">
+            <div>
+                <h1>Reporte General</h1>
+                <p>Resumen de todos los contactos registrados</p>
+            </div>
+        </div>
+
+        <!---Tarjetas de estadísticas: mostramos el total de contactos, los favoritos y los normales. -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icono azul" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⚇</div>
+                <h2>{{ total }}</h2>
+                <p>Total Contactos</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icono morado" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">✓</div>
+                <h2>{{ favoritos }}</h2>
+                <p>Contactos Favoritos</p>
+            </div>
+            <!---La cantidad de contactos normales se calcula restando los favoritos al total. -->
+            <div class="stat-card">
+                <div class="stat-icono lila" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⎙</div>
+                <h2>{{ total - favoritos }}</h2>
+                <p>Contactos Normales</p>
+            </div>
+        </div>
+
+        <!---Tabla de contactos agrupados por categoría, iterando sobre el diccionario de categorías enviado desde el servidor. -->
+        <div class="tabla-caja">
+            <div class="tabla-titulo">Contactos por Categoria</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cat, cant in categorias.items() %}
+                    <tr>
+                        <td>{{ cat }}</td>
+                        <td>{{ cant }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!---Enlace para regresar al listado principal de contactos. -->
+        <div>
+            <a href="{{ url_for('contactos') }}" class="btn-secondary" style="display:inline-flex;">&#8592; Volver a Contactos</a>
+        </div>
+    </main>
+</div>
+</body>
+</html>

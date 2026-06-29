@@ -1,0 +1,342 @@
+/*** Le damos a todos los elementos un estilo de bloque uniforme, sin márgenes ni rellenos, y establecemos la fuente base del sistema. ***/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*** Le damos al cuerpo un fondo claro y nos aseguramos de que ocupe toda la altura de la pantalla. ***/
+body {
+    background: #f4f7fe;
+    min-height: 100vh;
+}
+
+/*** Creamos el encabezado superior con fondo blanco, distribución en fila y un borde inferior que lo separa del contenido. ***/
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 28px;
+    background: #fff;
+    border-bottom: 1px solid #e2e8f5;
+}
+
+/*** Le damos al logo del encabezado alineación horizontal, color corporativo y tipografía en negrita. ***/
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #2b4c7e;
+    text-decoration: none;
+}
+
+/*** Le damos a la imagen del logo un tamaño fijo y ajuste de contenido para que no se deforme. ***/
+.header-logo img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+/*** Creamos un ícono azul opcional dentro del logo con fondo redondeado y texto blanco centrado. ***/
+.header-logo .icono-azul {
+    width: 30px;
+    height: 30px;
+    background: #3b5a85;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    color: #fff;
+}
+
+/*** Le damos al botón de cerrar sesión un estilo discreto de enlace, sin subrayado ni fondo. ***/
+.btn-cerrar-sesion {
+    color: #6b7c9e;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn-cerrar-sesion:hover {
+    color: #3b5a85;
+}
+
+/*** Centramos el área del formulario con un ancho máximo y relleno lateral para que respire en pantalla. ***/
+.form-area {
+    max-width: 660px;
+    margin: 28px auto;
+    padding: 0 20px;
+}
+
+/*** Le damos al enlace de volver un estilo discreto con ícono alineado y margen inferior para separarlo del panel. ***/
+.volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #6b7c9e;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.volver:hover {
+    color: #3b5a85;
+}
+
+/*** Creamos el panel del formulario con fondo blanco, bordes redondeados y un borde sutil alrededor. ***/
+.form-panel {
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid #e2e8f5;
+    overflow: hidden;
+}
+
+/*** Distribuimos el encabezado del panel con título y botón de cierre en los extremos, separado por un borde inferior. ***/
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e2e8f5;
+}
+
+/*** Le damos al título del panel color corporativo, tamaño destacado y negrita. ***/
+.form-header h2 {
+    color: #2b4c7e;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+/*** Le damos a la descripción del panel un color gris claro y tamaño pequeño. ***/
+.form-header p {
+    color: #8b95b3;
+    font-size: 12px;
+}
+
+/*** Creamos el botón de cierre en forma de X con fondo claro, tamaño compacto y bordes redondeados. ***/
+.btn-x {
+    width: 28px;
+    height: 28px;
+    background: #f0f4fd;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #6b7c9e;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-x:hover {
+    background: #e0e8f8;
+}
+
+/*** Le damos al cuerpo del formulario un relleno interno generoso para que los campos no queden pegados a los bordes. ***/
+.form-body {
+    padding: 22px 24px;
+}
+
+/*** Distribuimos los campos en dos columnas iguales con separación uniforme entre ellos. ***/
+.dos-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/*** Le damos a cada campo del formulario un margen inferior para separarlo del siguiente. ***/
+.campo {
+    margin-bottom: 16px;
+}
+
+/*** Le damos a la etiqueta de cada campo color azul, tamaño pequeño y negrita para que destaque. ***/
+.campo label {
+    display: block;
+    color: #3b5a85;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+/*** Le damos a los inputs, selects y textareas un estilo unificado con borde sutil, fondo blanco y sin contorno al enfocar. ***/
+.campo input,
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid #d5ddf0;
+    border-radius: 10px;
+    background: #fff;
+    color: #4a5568;
+    font-size: 13px;
+    outline: none;
+}
+
+/*** Resaltamos el borde con azul claro cuando el usuario hace foco en cualquier campo. ***/
+.campo input:focus, 
+.campo select:focus, 
+.campo textarea:focus {
+    border-color: #a3bcf9;
+}
+
+/*** Le damos al textarea una altura fija y desactivamos el redimensionamiento manual. ***/
+.campo textarea {
+    height: 90px;
+    resize: none;
+}
+
+/*** Decoramos el select con una flecha personalizada mediante SVG como imagen de fondo. ***/
+.campo select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M1 1l4 4 4-4' stroke='%233e5b99' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+/*** Creamos el pie del formulario con los botones de acción, separado del cuerpo por un borde superior. ***/
+.form-footer {
+    display: flex;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid #e2e8f5;
+}
+
+/*** Le damos al botón de guardar un fondo azul corporativo, texto blanco y negrita para que destaque como acción principal. ***/
+.btn-guardar {
+    background: #3b5a85;
+    color: #fff;
+    padding: 9px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-guardar:hover {
+    background: #2b4a70;
+}
+
+/*** Le damos al botón de cancelar un estilo secundario con fondo blanco, borde sutil y color azul. ***/
+.btn-cancelar {
+    background: #fff;
+    color: #3b5a85;
+    padding: 9px 22px;
+    border: 1.5px solid #d5ddf0;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-cancelar:hover {
+    background: #f0f4fd;
+}
+
+/*** Creamos el mensaje de alerta con fondo rosado y texto rojo para mostrar errores de validación. ***/
+.alerta {
+    color: #dc2626;
+    font-size: 13px;
+    padding: 10px 24px;
+    background: #fff5f5;
+}
+
+/*** Hacemos que el fondo del modal cubra toda la pantalla con un negro semitransparente cuando se activa. ***/
+.modal-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/*** Creamos la caja del modal centrada con fondo blanco, sombra suave y bordes redondeados. ***/
+.modal-box {
+    background: #fff;
+    width: 430px;
+    max-width: 92%;
+    padding: 26px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+/*** Le damos al ícono del modal forma circular con fondo azul claro y tamaño fijo. ***/
+.modal-icono {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    background: #e8f0ff;
+}
+
+/*** Hacemos que el cuerpo del modal ocupe todo el espacio restante junto al ícono. ***/
+.modal-cuerpo {
+    flex: 1;
+}
+
+/*** Le damos al título del modal color corporativo, tamaño destacado y negrita. ***/
+.modal-titulo {
+    color: #2b4c7e;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+/*** Le damos al texto del modal un color gris claro con interlineado cómodo para facilitar la lectura. ***/
+.modal-texto {
+    color: #8b95b3;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 18px;
+}
+
+/*** Distribuimos los botones del modal en fila con separación uniforme entre ellos. ***/
+.modal-btns {
+    display: flex;
+    gap: 10px;
+}
+
+/*** Le damos a los botones del modal tamaño igual, bordes redondeados y tipografía en negrita. ***/
+.mbtn {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+/*** Hacemos el botón azul para confirmar acciones principales dentro del modal. ***/
+.mbtn.azul {
+    background: #3b5a85;
+    color: #fff;
+}
+
+/*** Hacemos el botón blanco para cancelar sin realizar cambios, con borde sutil. ***/
+.mbtn.blanco {
+    background: #fff;
+    color: #555;
+    border: 1.5px solid #d5ddf0;
+}

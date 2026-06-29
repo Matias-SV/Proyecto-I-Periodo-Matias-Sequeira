@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestor de Contactos</title>
+    <!---Enlazamos la hoja de estilos principal para mantener la apariencia del sistema. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+<!---Encabezado con el logo del sistema y el botón para cerrar sesión. -->
+<header class="header">
+    <div class="header-logo">
+        <img src="{{ url_for('static', filename='Images/imagen_logo.png') }}" alt="Logo">
+        Gestor de Contactos
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn-cerrar-sesion">&#8594; Cerrar Sesion</a>
+</header>
+
+<!---Estructura de layout con barra lateral de navegación y contenido principal de la lista de contactos. -->
+<div class="layout">
+    <!---Barra lateral con los enlaces de navegación, marcando "Inicio" como la sección activa. -->
+    <aside class="sidebar">
+        <a href="{{ url_for('contactos') }}" class="nav-link activo">🏠︎ Inicio</a>
+        <a href="{{ url_for('buscar_contacto') }}" class="nav-link">⌕ Buscar</a>
+        <a href="{{ url_for('reporte') }}" class="nav-link">🗏 Reportes</a>
+    </aside>
+
+    <main class="contenido">
+
+        <!---Sección superior con el título, descripción y botones para actualizar la lista o agregar un nuevo contacto. -->
+        <div class="seccion-top">
+            <div>
+                <h1>Gestor de Contactos</h1>
+                <p>Administre y organice sus contactos</p>
+            </div>
+            <div class="btns-top">
+                <a href="{{ url_for('contactos', orden='az') }}" class="btn-secondary">&#8635; Actualizar Contactos</a>
+                <a href="{{ url_for('nuevo_contacto') }}" class="btn-primary">+ Agregar Contacto</a>
+            </div>
+        </div>
+
+        <!---Tarjetas de estadísticas: mostramos el total de contactos, los activos y los de categoría Trabajo. -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icono azul" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⚇</div>
+                <h2>{{ contactos|length }}</h2>
+                <p>Total Contactos</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icono morado" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">✓</div>
+                <h2>{{ total_favoritos }}</h2>
+                <p>Contactos Activos</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icono lila" style="display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">⎙</div>
+                <h2>{{ total_trabajo }}</h2>
+                <p>Contactos de Trabajo</p>
+            </div>
+        </div>
+
+        <!---Tabla principal con el listado completo de contactos, incluyendo nombre, correo, cargo, estado y acciones disponibles. -->
+        <div class="tabla-caja">
+            <div class="tabla-titulo">Lista de Contactos</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Cargo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!---Iteramos sobre cada contacto de la lista para mostrar sus datos en una fila de la tabla. -->
+                    {% for c in contactos %}
+                    <tr>
+                        <td>
+                            <!---Mostramos el avatar con la inicial del nombre, seguido del nombre completo y la categoría del contacto. -->
+                            <div class="nombre-col">
+                                <div class="avatar">{{ c.nombre[0].upper() }}</div>
+                                <div>
+                                    <div class="nombre-bold">{{ c.nombre }} {{ c.apellido }}</div>
+                                    <div class="nombre-sub">{{ c.categoria }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ c.correo }}</td>
+                        <td>{{ c.direccion }}</td>
+                        <!---Mostramos el estado del contacto: "Activo" si es favorito, o "Inactivo" en caso contrario. -->
+                        <td>
+                            {% if c.favorito == 'si' %}
+                                <span class="badge verde" style="display: inline-flex; align-items: center; gap: 4px;">✓ Favorito</span>
+                            {% else %}
+                                <span class="badge rojo">Normal</span>
+                            {% endif %}
+                        </td>
+                        <!---Botones de acción por contacto: editar, ver perfil y eliminar con confirmación mediante modal. -->
+                        <td>
+                            <div class="acciones">
+                                <a href="{{ url_for('editar_contacto', idx=c.id) }}" class="btn-tabla editar" title="Editar">&#9998;</a>
+                                <a href="{{ url_for('perfil_contacto', idx=c.id) }}" class="btn-tabla ver" title="Ver">&#128065;</a>
+                                <button class="btn-tabla eliminar" onclick="abrirModalEliminar({{ c.id }})" title="Eliminar">&#128465;</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <!---Si no hay contactos registrados, mostramos una fila con un mensaje informativo. -->
+                    {% else %}
+                    <tr><td colspan="5" style="text-align:center; padding:30px; color:#aaa;">No hay contactos registrados.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<!---Modal de confirmación para eliminar un contacto, con botones para confirmar o cancelar la acción. -->
+<div id="modalEliminar" class="modal-bg">
+    <div class="modal-box">
+        <div class="modal-icono rojo" style="display: flex; align-items: center; justify-content: center; font-size: 2rem;">⚠︎</div>
+        <div class="modal-cuerpo">
+            <div class="modal-titulo">Eliminar Contacto</div>
+            <p class="modal-texto">Esta seguro/a que desea eliminar al contacto? Esta accion no puede ser revertedida.</p>
+            <div class="modal-btns">
+                <button id="btnConfEliminar" class="mbtn rojo">Eliminar</button>
+                <button onclick="document.getElementById('modalEliminar').style.display='none'" class="mbtn blanco">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---Guardamos el id del contacto a eliminar y al confirmar, redirigimos a la ruta de eliminación correspondiente. -->
+<script>
+var idEliminar = null;
+function abrirModalEliminar(id) {
+    idEliminar = id;
+    document.getElementById('modalEliminar').style.display = 'flex';
+}
+document.getElementById('btnConfEliminar').onclick = function() {
+    if (idEliminar !== null) window.location.href = '/eliminar-contacto/' + idEliminar;
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!---El título de la pestaña muestra el nombre completo del contacto que se está visualizando. -->
+    <title>{{ contacto.nombre }} {{ contacto.apellido }}</title>
+    <!---Enlazamos la hoja de estilos específica para la vista de perfil. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/perfil.css') }}">
+</head>
+<body>
+
+<!---Encabezado con el logo del sistema y el botón para cerrar sesión. -->
+<header class="header">
+    <div class="header-logo">
+        <img src="{{ url_for('static', filename='Images/imagen_logo.png') }}" alt="Logo">
+        Gestor de Contactos
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn-cerrar-sesion">&#8594; Cerrar Sesion</a>
+</header>
+
+<!---Área principal del perfil, con un enlace para volver al listado de contactos. -->
+<div class="perfil-area">
+    <a href="{{ url_for('contactos') }}" class="volver">&#8592; Volver</a>
+
+    <!---Tarjeta del perfil que contiene toda la información del contacto seleccionado. -->
+    <div class="perfil-card">
+
+        <!---Sección superior del perfil: mostramos el avatar con la inicial, el nombre, cargo, categoría y estado del contacto. -->
+        <div class="perfil-top">
+            <div class="perfil-id">
+                <div class="perfil-avatar">{{ contacto.nombre[0].upper() }}</div>
+                <div>
+                    <div class="perfil-nombre">{{ contacto.nombre }} {{ contacto.apellido }}</div>
+                    <div class="perfil-cargo">{{ contacto.direccion }}</div>
+                    <div class="perfil-empresa">{{ contacto.categoria }}</div>
+                    <!---Mostramos el estado del contacto con un badge verde si está activo, o rojo si está inactivo. -->
+                    {% if contacto.favorito == 'si' %}
+                        <span class="badge verde" style="display: inline-flex; align-items: center; gap: 4px;">✓ Favorito</span>
+                    {% else %}
+                        <span class="badge rojo">Normal</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!---Grilla de información detallada del contacto, con tarjetas para email, teléfono, empresa y tipo de contacto. -->
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-ico"></div>
+                <div>
+                    <div class="info-label">Email</div>
+                    <div class="info-valor">{{ contacto.correo }}</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-ico"></div>
+                <div>
+                    <div class="info-label">Telefono</div>
+                    <div class="info-valor">{{ contacto.telefono }}</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-ico"></div>
+                <div>
+                    <div class="info-label">Empresa / Apellido</div>
+                    <!---Si el contacto no tiene apellido registrado, mostramos "No especificado" como valor predeterminado. -->
+                    <div class="info-valor">{{ contacto.apellido or 'No especificado' }}</div>
+                </div>
+            </div>
+            <div class="info-card">
+                <div class="info-ico"></div>
+                <div>
+                    <div class="info-label">Tipo de Contacto</div>
+                    <div class="info-valor">{% if contacto.favorito == 'si' %}Favorito{% else %}Normal{% endif %}</div>
+                </div>
+            </div>
+            <!---Tarjeta de ancho completo que muestra el estado actual del contacto como "Conectado". -->
+            <div class="info-card full">
+                <div class="info-ico"></div>
+                <div>
+                    <div class="info-label">Estado Actual</div>
+                    <div class="info-valor verde">Conectado</div>
+                </div>
+            </div>
+        </div>
+
+        <!---Botones de acción del perfil: editar, eliminar y volver al listado principal. -->
+        <div class="perfil-btns">
+            <a href="{{ url_for('editar_contacto', idx=idx) }}" class="btn-primary">Editar Contacto</a>
+            <button onclick="document.getElementById('modalElim').style.display='flex'" class="btn-danger">Eliminar Contacto</button>
+            <a href="{{ url_for('contactos') }}" class="btn-secondary">Volver</a>
+        </div>
+    </div>
+</div>
+
+<!---Modal de confirmación para eliminar el contacto, con opciones de confirmar o cancelar la acción. -->
+<div id="modalElim" class="modal-bg">
+    <div class="modal-box">
+        <div class="modal-icono rojo" style="display: flex; align-items: center; justify-content: center; font-size: 2rem;">⚠︎</div>
+        <div class="modal-cuerpo">
+            <div class="modal-titulo">Eliminar Contacto</div>
+            <p class="modal-texto">Esta seguro/a que desea eliminar al contacto? Esta accion no puede ser revertida.</p>
+            <div class="modal-btns">
+                <a href="{{ url_for('eliminar_contacto', idx=idx) }}" class="mbtn rojo">Eliminar</a>
+                <button onclick="document.getElementById('modalElim').style.display='none'" class="mbtn blanco">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

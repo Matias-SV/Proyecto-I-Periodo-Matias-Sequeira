@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Contacto</title>
+    <!---Enlazamos la hoja de estilos del formulario para mantener la apariencia consistente con el sistema. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+</head>
+<body>
+
+<!---Encabezado con el logo del sistema y el botón para cerrar sesión. -->
+<header class="header">
+    <div class="header-logo">
+        <img src="{{ url_for('static', filename='Images/imagen_logo.png') }}" alt="Logo">
+        Gestor de Contactos
+    </div>
+    <a href="{{ url_for('logout') }}" class="btn-cerrar-sesion">&#8594; Cerrar Sesion</a>
+</header>
+
+<!---Área principal del formulario con un enlace para volver al listado de contactos. -->
+<div class="form-area">
+    <a href="{{ url_for('contactos') }}" class="volver">&#8592; Volver</a>
+
+    <div class="form-panel">
+
+        <!---Encabezado del panel con el título del formulario, descripción y botón de cierre. -->
+        <div class="form-header">
+            <div>
+                <h2>Editar Contacto</h2>
+                <p>Actualiza la informacion del contacto</p>
+            </div>
+            <a href="{{ url_for('contactos') }}" class="btn-x">&#x2715;</a>
+        </div>
+
+        <!---Si el servidor retorna un error de validación, lo mostramos aquí antes del formulario. -->
+        {% if error %}<p class="alerta">ⓘ {{ error }}</p>{% endif %}
+
+        <!---Formulario de edición con los datos actuales del contacto precargados en cada campo, y validación al enviar. -->
+        <form method="POST" id="formEditar" onsubmit="return validarForm()">
+            <div class="form-body">
+
+                <!---Distribución en dos columnas con los campos principales del contacto, con sus valores actuales precargados. -->
+                <div class="dos-col">
+                    <div class="campo">
+                        <label>Nombre Completo *</label>
+                        <input type="text" name="nombre" id="nombre" value="{{ contacto.nombre }}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Email *</label>
+                        <input type="text" name="correo" id="correo" value="{{ contacto.correo }}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Telefono * (8 digitos)</label>
+                        <input type="text" name="telefono" id="telefono" value="{{ contacto.telefono }}" required>
+                    </div>
+                    <div class="campo">
+                        <label>Apellido / Empresa</label>
+                        <input type="text" name="apellido" value="{{ contacto.apellido }}">
+                    </div>
+                    <div class="campo">
+                        <label>Cargo/Direccion</label>
+                        <input type="text" name="direccion" value="{{ contacto.direccion }}">
+                    </div>
+                    <!---Selector de categoría con la opción actual del contacto marcada como seleccionada. -->
+                    <div class="campo">
+                        <label>Categoria</label>
+                        <select name="categoria">
+                            <option value="Familia" {% if contacto.categoria == 'Familia' %}selected{% endif %}>Familia</option>
+                            <option value="Trabajo" {% if contacto.categoria == 'Trabajo' %}selected{% endif %}>Trabajo</option>
+                            <option value="Amigos" {% if contacto.categoria == 'Amigos' %}selected{% endif %}>Amigos</option>
+                            <option value="Otro" {% if contacto.categoria == 'Otro' %}selected{% endif %}>Otro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!---Selector de estado con el valor actual del contacto precargado. -->
+                <div class="campo">
+                    <label>Estado</label>
+                    <select name="favorito">
+                        <option value="si" {% if contacto.favorito == 'si' %}selected{% endif %}>Activo (Favorito)</option>
+                        <option value="no" {% if contacto.favorito != 'si' %}selected{% endif %}>Normal</option>
+                    </select>
+                </div>
+
+                <!---Campo de texto libre para notas adicionales del contacto. -->
+                <div class="campo">
+                    <label>Notas</label>
+                    <textarea name="notes" placeholder="Notas adicionales..."></textarea>
+                </div>
+            </div>
+
+            <!---Pie del formulario: el botón de guardar abre el modal de confirmación antes de enviar, y el enlace cancela la operación. -->
+            <div class="form-footer">
+                <button type="button" onclick="document.getElementById('modalActualizar').style.display='flex'" class="btn-guardar">Actualizar Contacto</button>
+                <a href="{{ url_for('contactos') }}" class="btn-cancelar">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!---Modal de confirmación para actualizar el contacto, con botones para confirmar el envío del formulario o cancelar. -->
+<div id="modalActualizar" class="modal-bg">
+    <div class="modal-box">
+        <div class="modal-icono azul" style="display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #2b4c7e;">ⓘ</div>
+        <div class="modal-cuerpo">
+            <div class="modal-titulo">Actualizar Contacto</div>
+            <p class="modal-texto">Esta seguro/a que desea actualizar la informacion del contacto? Esta accion no puede ser revertida.</p>
+            <div class="modal-btns">
+                <button onclick="document.getElementById('formEditar').submit()" class="mbtn azul">Actualizar</button>
+                <button onclick="document.getElementById('modalActualizar').style.display='none'" class="mbtn blanco">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---Función de validación del formulario en el lado del cliente: verifica nombre, correo y teléfono antes de permitir el envío. -->
+<script>
+function validarForm() {
+    var nombre = document.getElementById('nombre').value.trim();
+    var correo = document.getElementById('correo').value.trim();
+    var telefono = document.getElementById('telefono').value.trim();
+    if (!nombre || !telefono || !correo) {
+        alert('Los campos nombre, telefono y correo son obligatorios.');
+        return false;
+    }
+    if (!correo.includes('@') || correo.split('@')[1].indexOf('.') === -1) {
+        alert('El correo no tiene un formato valido.');
+        return false;
+    }
+    if (!/^\d{8}$/.test(telefono)) {
+        alert('El telefono debe tener exactamente 8 digitos numericos.');
+        return false;
+    }
+    return true;
+}
+</script>
+</body>
+</html>
